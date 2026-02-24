@@ -1,0 +1,23 @@
+.gylphDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.gylphDiv button {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: var(--accent-blue);
+    font-family: monospace;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.1s;
+    filter: brightness(1.2);
+}
+
+.gylphDiv button:hover {
+    filter: brightness(1.7);
+    transform: scale(1.05);
+}

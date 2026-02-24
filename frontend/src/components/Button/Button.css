@@ -1,0 +1,39 @@
+.primary {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-main);
+    background: linear-gradient(45deg, var(--accent-purple), var(--accent-blue));
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    font-family: var(--text-inter);
+}
+
+.primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 40px rgba(138, 43, 226, 0.6);
+}
+
+.secondary {
+    padding: 0.8rem 2rem;
+    background: transparent;
+    color: var(--accent-blue);
+    border: 2px solid var(--accent-blue);
+    cursor: pointer;
+    font-weight: bold;
+    font-family: var(--text-inter);
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.secondary:hover {
+    background: var(--accent-blue);
+    color: var(--text-main);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 20px rgba(76, 201, 240, 0.3);
+}
