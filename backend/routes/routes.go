@@ -9,5 +9,5 @@ func Setup(app *fiber.App) {
 	auth := app.Group("/auth")
 
 	// Auth routes
-	auth.Post("/login", handlers.Login)
+	auth.Get("/login", handlers.Login)
 }

@@ -42,6 +42,25 @@ p {
     -webkit-text-fill-color: transparent;
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-deep);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);  /* Scroll handle */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-purple);  /* Handle on hover */
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;

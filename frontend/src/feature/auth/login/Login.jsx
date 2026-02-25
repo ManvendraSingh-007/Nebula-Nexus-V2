@@ -1,9 +1,11 @@
 import StarBackground from "../../../components/StarBackground/StarBackground"
-import PasswordToggle from "../../../components/Gylph/GylphTrigger"
+import PasswordToggle from "../../../components/PasswordToggle/PasswordToggle"
+import Loading from "../../../components/Loading/Loading";
 import Button from "../../../components/Button/Button"
-import { CircleX } from 'lucide-react';
+import { CircleX, Dot, Eye, EyeClosed, MoveRight } from 'lucide-react';
 import { useState } from "react"
-import './Login.css'
+import '../Forms.css'
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -14,6 +16,8 @@ const Login = () => {
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword)
+    console.log('clicked');
+    
   }
 
   const handleInputChange = (e) => {
@@ -26,29 +30,35 @@ const Login = () => {
     ))
 
     if (errors[name]) {
-      setErrors({})
-    }
-
-    if (errors[name]) {
       setErrors(prev => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
       });
     }
+
+    if (errors.general) {
+      setErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors.general
+        return newErrors
+      })
+    }
   }
 
   const validateForm = () => {
     const errors = {};
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
     if (!formData.email) {
       errors.email = "Cosmic Address is required";
     }
-
-    if (!formData.password) {
+    else if (!emailRegex.test(formData.email)) {
+      errors.email = "Invalid Cosmic Address"
+    }
+    else if (!formData.password) {
       errors.password = "Access Key is required";
     }
-
     return errors;
   };
 
@@ -63,14 +73,14 @@ const Login = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('https://webhook.site/de559f6a-f2a3-4bcb-941d-996c54e036e1', {
+      const response = await fetch('http://127.0.0.1:3000/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         mode: 'no-cors',
         body: JSON.stringify(formData)
       })
     } catch (error) {
-      setErrors({ email: "Network error. Is the server down?" });
+      setErrors({ general: "Network error. Is the server down?" });
       console.log('Request failed');
 
     } finally {
@@ -102,7 +112,7 @@ const Login = () => {
                 required />
             </div>
 
-            <div className="inputGroup">
+            <div className="inputGroup passwordGroup">
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="password"
@@ -112,13 +122,9 @@ const Login = () => {
                 className={showPassword ? "revealed-coordinates" : ""}
                 required
               />
+              <PasswordToggle value={showPassword ? <EyeClosed /> : <Eye />} onClick={handlePasswordToggle} />
             </div>
 
-            <PasswordToggle
-              value={showPassword ? '← Hide Coordinates' : '→ Show Coordinates'}
-              type="button"
-              onClick={handlePasswordToggle}
-            />
 
             {Object.keys(errors).length > 0 && (
               <div className="errorMessage">
@@ -127,7 +133,7 @@ const Login = () => {
             )}
 
             <Button
-              value={isSubmitting ? 'Logging In...' : 'Log In'}
+              value={isSubmitting ? <>Loading... <Loading /></> : <>Log in</>}
               style="primary"
               type="submit"
 
@@ -136,7 +142,11 @@ const Login = () => {
           </form>
 
           <div className="footer">
-            <p>Forgot Access Key? <a href="#reset">Reset here</a></p>
+            <p>
+              <Link to='/auth/reset'>Lost your key?</Link>
+              <span><Dot /></span>
+              <Link to='/auth/signup'>New To Nexus?</Link>
+            </p>
           </div>
         </div>
       </div>
